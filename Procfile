@@ -1,1 +1,1 @@
-web: uv run python railway_server.py
+web: python railway_server.py
