@@ -10,17 +10,19 @@ import sys
 
 def main():
     port_str = os.environ.get("PORT")
-    
+
     if port_str:
         # Railway / remote HTTP mode — use SSE transport
-        # FastMCP reads host/port from FASTMCP_HOST and FASTMCP_PORT env vars
         port = int(port_str)
-        os.environ["FASTMCP_PORT"] = port_str
-        os.environ["FASTMCP_HOST"] = "0.0.0.0"
         print(f"Starting Monarch MCP server with SSE transport on port {port}", file=sys.stderr)
-        
+
         from server import mcp
-        mcp.run(transport="sse")
+        import uvicorn
+
+        # Use sse_app() to get the ASGI app and run uvicorn directly
+        # This lets us control host and port regardless of FastMCP settings
+        app = mcp.sse_app()
+        uvicorn.run(app, host="0.0.0.0", port=port)
     else:
         # Local stdio mode — standard Claude Desktop usage
         print("Starting Monarch MCP server with stdio transport", file=sys.stderr)
