@@ -19,8 +19,11 @@ def main():
         from server import mcp
         import uvicorn
 
+        # Disable DNS rebinding protection so Railway's public domain is accepted
+        mcp.settings.transport_security.enable_dns_rebinding_protection = False
+
         # Use sse_app() to get the ASGI app and run uvicorn directly
-        # This lets us control host and port regardless of FastMCP settings
+        # so we control host/port regardless of FastMCP defaults
         app = mcp.sse_app()
         uvicorn.run(app, host="0.0.0.0", port=port)
     else:
