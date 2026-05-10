@@ -1,0 +1,5 @@
+mcp[cli]>=1.26.0,<2
+monarchmoneycommunity
+pydantic>=2.12.5
+python-dateutil>=2.9.0.post0
+structlog>=25.5.0
