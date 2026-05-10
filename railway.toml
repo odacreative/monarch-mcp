@@ -2,6 +2,6 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "uv run python railway_server.py"
+startCommand = "python railway_server.py"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
