@@ -13,11 +13,14 @@ def main():
     
     if port_str:
         # Railway / remote HTTP mode — use SSE transport
+        # FastMCP reads host/port from FASTMCP_HOST and FASTMCP_PORT env vars
         port = int(port_str)
+        os.environ["FASTMCP_PORT"] = port_str
+        os.environ["FASTMCP_HOST"] = "0.0.0.0"
         print(f"Starting Monarch MCP server with SSE transport on port {port}", file=sys.stderr)
         
         from server import mcp
-        mcp.run(transport="sse", host="0.0.0.0", port=port)
+        mcp.run(transport="sse")
     else:
         # Local stdio mode — standard Claude Desktop usage
         print("Starting Monarch MCP server with stdio transport", file=sys.stderr)
